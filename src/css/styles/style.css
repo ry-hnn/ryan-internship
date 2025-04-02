@@ -13206,7 +13206,7 @@ a.read_more i {
 .nft_wrap {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 100%;
   overflow: hidden;
   border-radius: 10px 10px 0 0;
   -moz-border-radius: 10px 10px 0 0;
@@ -15097,7 +15097,116 @@ a.btn-slider:hover {
   width: auto;
 }
 
-/* flex slider - testi slider */
+/* RESPONSIVE SLDIER */
+
+.responsive-slider-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.slider-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+  min-height: 100px;
+}
+
+button.slick-prev,
+button.slick-next {
+  background-color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+}
+
+button.slick-prev:before,
+button.slick-next:before {
+  font-family: 'slick';
+  font-size: 20px;
+  line-height: 1;
+  opacity: 1;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  z-index: 2;
+}
+
+button.slick-prev:hover,
+button.slick-next:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+button.slick-prev {
+  left: -20px;
+}
+
+button.slick-next {
+  right: -20px;
+}
+
+button.slick-prev:before {
+  color: black;
+  content: '←';
+}
+
+button.slick-next:before {
+  color: black;
+  content: '→';
+}
+
+.nft_coll {
+  width: 200px;
+}
+
+/* Skeleton loading state */
+.skeleton-box {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  background-color: #DDDBDD;
+  background-size: 1000px 100%; display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-box::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -150%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
 
 #testimonial-full {
   text-align: center;
