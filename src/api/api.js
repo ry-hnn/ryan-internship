@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_URL = 'https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections';
+const ITEMS_API_URL = 'https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems';
 
 const getHotCollections = async (id) => {
   try {
@@ -16,4 +17,14 @@ const getHotCollections = async (id) => {
   }
 };
 
-export { getHotCollections };
+const getNewItems = async () => { 
+  try {
+    const response = await axios.get(ITEMS_API_URL);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export { getHotCollections, getNewItems };

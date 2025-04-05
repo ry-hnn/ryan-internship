@@ -55,7 +55,7 @@ export const HotCollections = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          {/* <div className="responsive-slider-container"> */}
+          <div className="responsive-slider-container">
           <ResponsiveSlider>
             {collections.map((collection, index) => {
               return (
@@ -93,7 +93,7 @@ export const HotCollections = () => {
         </ResponsiveSlider>
         </div>
         </div>
-      {/* </div> */}
+      </div>
     </section>
   );
 };

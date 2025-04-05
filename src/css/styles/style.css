@@ -13620,15 +13620,28 @@ a.read_more i {
   padding-left: 70px;
 }
 
+/* NEW ITEMS */
+#section-items .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#section-items .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .nft__item {
   position: relative;
-  padding: 20px;
-  border: solid 1px #ddd;
-  border-radius: 15px;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  margin-bottom: 25px;
-  background: #ffffff;
+   background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 15px;
+  width: 200px;
+  max-width: 300px;
+  transition: transform 0.3s ease;
 }
 
 .nft__item.style-2,
@@ -13662,13 +13675,12 @@ a.read_more i {
 }
 
 .nft__item_wrap {
-  width: 100%;
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
-  height: 350px;
+  min-height: 300px;
 }
 
 .nft__item_wrap a {
@@ -13691,11 +13703,14 @@ a.read_more i {
 .nft__item h4 {
   font-weight: 800;
   font-size: 15px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 
 .nft__item_info {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .nft__item_info a {
@@ -13729,6 +13744,7 @@ a.read_more i {
   font-size: 14px;
   color: #ddd;
   float: right;
+  margin-top: 20px;
 }
 
 .rtl .nft__item_like {
@@ -14140,7 +14156,10 @@ a.read_more i {
 
 .de_countdown {
   position: absolute;
-  right: 20px;
+  right: 0;
+  top: 0px;
+  text-align: right;
+  width: max-content;
   background: #ffffff;
   padding: 1px 10px;
   border-radius: 30px;
@@ -15167,6 +15186,13 @@ button.slick-next:before {
 .nft_coll {
   width: 200px;
 }
+
+/* NEW ITEMS */
+
+.slick-slide.slick-active {
+  width: 200px;
+}
+
 
 /* Skeleton loading state */
 .skeleton-box {
