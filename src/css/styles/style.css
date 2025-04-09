@@ -16,6 +16,8 @@
 @import url("../fonts/elegant_font/HTML_CSS/style.css");
 @import url("../fonts/et-line-font/style.css");
 @import url("../fonts/icofont/icofont.min.css");
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
 
 * {
   --body-font: "DM Sans", Helvetica, Arial, sans-serif;
@@ -9036,6 +9038,7 @@ hr.blank {
 
 /* ================================================== */
 
+
 i {
   display: inline-block;
 }
@@ -16785,6 +16788,9 @@ img {
   }
 }
 
+/* SKELETON LOADING */
+
+
 .skeleton-box {
   display: inline-block;
   height: 1em;
@@ -16821,6 +16827,35 @@ img {
     transform: translateX(100%);
   }
 }
+
+/* TOP SELLERS SKELETON LOADER */
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.top-sellers-skeleton-loader {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+.top-sellers-skeleton-loader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  animation: shimmer 1.5s infinite;
+}
+
 
 .nft-image {
   height: 100%;

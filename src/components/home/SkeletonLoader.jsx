@@ -9,6 +9,7 @@ const SkeletonLoader = () => {
       </div>
       <div className="nft_coll_pp" style={{ position: 'relative', marginTop: '-30px',}}>
         <Skeleton width="60px" height="60px" borderRadius="50%" />
+        <i className="fa fa-check"></i>
       </div>
       <div className="nft_coll_info" style={{ padding: '10px' }}>
         <Skeleton width="80%" height="20px" borderRadius="5px" />
