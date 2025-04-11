@@ -6,6 +6,10 @@ const ITEMS_API_URL =
   "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems";
 const SELLERS_API_URL =
   "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers";
+const EXPLORE_API_URL =
+  "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore";
+const FILTER_API_URL =
+  "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter={value}";
 
 const getHotCollections = async (id) => {
   try {
@@ -41,4 +45,24 @@ const getTopSellers = async () => {
   }
 };
 
-export { getHotCollections, getNewItems, getTopSellers };
+const getExploreItems = async () => {
+  try {
+    const response = await axios.get(EXPLORE_API_URL);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const getFilterItems = async (filter) => {
+  try {
+    const response = await axios.get(`${FILTER_API_URL.replace('{value}', filter)}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export { getHotCollections, getNewItems, getTopSellers, getExploreItems, getFilterItems };

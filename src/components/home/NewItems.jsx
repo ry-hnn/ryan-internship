@@ -38,7 +38,6 @@ const NewItems = () => {
 
     if (difference > 0) {
       timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((difference / 1000 / 60) % 60),
         seconds: Math.floor((difference / 1000) % 60),
@@ -55,13 +54,15 @@ const NewItems = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="text-center">
-                <h2>New Items</h2>
                 <div className="small-border bg-color-2"></div>
               </div>
             </div>
             <ResponsiveSlider>
               {[...Array(4)].map((_, index) => (
-                <div key={index} className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div
+                  key={index}
+                  className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                >
                   <SkeletonLoader />
                 </div>
               ))}
@@ -71,7 +72,7 @@ const NewItems = () => {
       </section>
     );
   }
-  
+
   return (
     <section id="section-items" className="no-bottom">
       <div className="container">
@@ -87,8 +88,7 @@ const NewItems = () => {
               const countdown = countdowns[collection.id];
               const hasTimeLeft =
                 countdown &&
-                (countdown.days > 0 ||
-                  countdown.hours > 0 ||
+                (countdown.hours > 0 ||
                   countdown.minutes > 0 ||
                   countdown.seconds > 0);
 
@@ -113,9 +113,10 @@ const NewItems = () => {
                         <i className="fa fa-check"></i>
                       </Link>
                     </div>
+
                     {hasTimeLeft && (
                       <div className="de_countdown">
-                        {countdown.days}d {countdown.hours}h {countdown.minutes}
+                        {countdown.days} {countdown.hours}h {countdown.minutes}
                         m {countdown.seconds}s
                       </div>
                     )}

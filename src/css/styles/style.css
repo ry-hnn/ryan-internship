@@ -13292,7 +13292,7 @@ a.read_more i {
 }
 
 .author_list_pp {
-  margin-top: 2px;
+  margin-top: 10px;
   position: absolute;
   display: inline-block;
   width: 50px;
@@ -13700,7 +13700,8 @@ a.read_more i {
 }
 
 .nft__item .author_list_pp {
-  margin: 0;
+  margin: 10;
+  margin-top: 10;
 }
 
 .nft__item h4 {
@@ -14161,8 +14162,10 @@ a.read_more i {
   position: absolute;
   right: 0;
   top: 0px;
-  text-align: right;
-  width: max-content;
+  text-align: center;
+  width: 106px;
+  margin: 8px;
+  font-size: small;
   background: #ffffff;
   padding: 1px 10px;
   border-radius: 30px;
