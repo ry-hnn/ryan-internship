@@ -83,7 +83,7 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-<AuthorItems collections={collections} loading={loading} authorImage={authorData.authorImage} /> {/* Pass props */}
+<AuthorItems collections={collections} loading={loading} authorImage={authorData.authorImage} />
                 </div>
               </div>
             </div>
