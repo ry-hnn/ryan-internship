@@ -12,6 +12,8 @@ const FILTER_API_URL =
   "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter={value}";
 const AUTHOR_API_URL =
   "https://us-central1-nft-cloud-functions.cloudfunctions.net/authors";
+const ITEM_DETAILS_API_URL =
+  "https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails";
 
 const getHotCollections = async (id) => {
   try {
@@ -69,7 +71,6 @@ const getFilterItems = async (filter) => {
   }
 };
 
-
 // Added retry logic to reduce failures from temporary network/API hiccups.
 
 const getAuthorItems = async (authorId, retries = 3) => {
@@ -79,7 +80,9 @@ const getAuthorItems = async (authorId, retries = 3) => {
 
   const fetchData = async (attempt) => {
     try {
-      const response = await axios.get(`${AUTHOR_API_URL}?author=${authorId}`, { timeout: 5000 });
+      const response = await axios.get(`${AUTHOR_API_URL}?author=${authorId}`, {
+        timeout: 5000,
+      });
       if (response.status === 200) {
         return response.data;
       } else {
@@ -97,6 +100,32 @@ const getAuthorItems = async (authorId, retries = 3) => {
   return fetchData(0);
 };
 
+const getItemDetails = async (nftId, retries = 3) => {
+  if (!nftId) {
+    return null;
+  }
+  const fetchData = async (attempt) => {
+    try {
+      const response = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`, {
+        timeout: 5000,
+      });
+      console.log(response.data)
+      if (response.status === 200) {
+        return response.data;
+      }
+      return null;
+    } catch (error) {
+      console.error(`Attempt ${attempt + 1} failed:`, error);
+      if (attempt < retries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+        return fetchData(attempt + 1);
+      }
+      return null;
+    }
+  };
+  return fetchData(0);
+};
+
 export {
   getHotCollections,
   getNewItems,
@@ -104,4 +133,5 @@ export {
   getExploreItems,
   getFilterItems,
   getAuthorItems,
+  getItemDetails,
 };
