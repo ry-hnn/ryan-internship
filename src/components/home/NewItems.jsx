@@ -100,15 +100,15 @@ const NewItems = () => {
                   <div className="nft__item">
                     <div className="author_list_pp">
                       <Link
-                        to="/author"
+                        to={`/author/${collection.authorId}`} // Updated to include authorId
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
-                        title="Creator: Monica Lucas"
+                        title={`Creator: ${collection.authorName}`}
                       >
                         <img
                           className="lazy"
                           src={collection.authorImage}
-                          alt=""
+                          alt={collection.authorName}
                         />
                         <i className="fa fa-check"></i>
                       </Link>

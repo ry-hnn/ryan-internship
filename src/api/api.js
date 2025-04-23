@@ -10,6 +10,8 @@ const EXPLORE_API_URL =
   "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore";
 const FILTER_API_URL =
   "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter={value}";
+const AUTHOR_API_URL =
+  "https://us-central1-nft-cloud-functions.cloudfunctions.net/authors";
 
 const getHotCollections = async (id) => {
   try {
@@ -57,7 +59,9 @@ const getExploreItems = async () => {
 
 const getFilterItems = async (filter) => {
   try {
-    const response = await axios.get(`${FILTER_API_URL.replace('{value}', filter)}`);
+    const response = await axios.get(
+      `${FILTER_API_URL.replace("{value}", filter)}`
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -65,4 +69,39 @@ const getFilterItems = async (filter) => {
   }
 };
 
-export { getHotCollections, getNewItems, getTopSellers, getExploreItems, getFilterItems };
+
+// Added retry logic to reduce failures from temporary network/API hiccups.
+
+const getAuthorItems = async (authorId, retries = 3) => {
+  if (!authorId) {
+    return null;
+  }
+
+  const fetchData = async (attempt) => {
+    try {
+      const response = await axios.get(`${AUTHOR_API_URL}?author=${authorId}`, { timeout: 5000 });
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      if (attempt < retries) {
+        return fetchData(attempt + 1);
+      } else {
+        return null;
+      }
+    }
+  };
+
+  return fetchData(0);
+};
+
+export {
+  getHotCollections,
+  getNewItems,
+  getTopSellers,
+  getExploreItems,
+  getFilterItems,
+  getAuthorItems,
+};
