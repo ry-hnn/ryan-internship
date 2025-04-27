@@ -71,59 +71,40 @@ const getFilterItems = async (filter) => {
   }
 };
 
-// Added retry logic to reduce failures from temporary network/API hiccups.
-
-const getAuthorItems = async (authorId, retries = 3) => {
+const getAuthorItems = async (authorId) => {
   if (!authorId) {
     return null;
   }
-
-  const fetchData = async (attempt) => {
-    try {
-      const response = await axios.get(`${AUTHOR_API_URL}?author=${authorId}`, {
-        timeout: 5000,
-      });
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        return null;
-      }
-    } catch (error) {
-      if (attempt < retries) {
-        return fetchData(attempt + 1);
-      } else {
-        return null;
-      }
+  try {
+    const response = await axios.get(`${AUTHOR_API_URL}?author=${authorId}`, {
+      timeout: 5000,
+    });
+    if (response.status === 200) {
+      return response.data;
     }
-  };
-
-  return fetchData(0);
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
-const getItemDetails = async (nftId, retries = 3) => {
+const getItemDetails = async (nftId) => {
   if (!nftId) {
     return null;
   }
-  const fetchData = async (attempt) => {
-    try {
-      const response = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`, {
-        timeout: 5000,
-      });
-      console.log(response.data)
-      if (response.status === 200) {
-        return response.data;
-      }
-      return null;
-    } catch (error) {
-      console.error(`Attempt ${attempt + 1} failed:`, error);
-      if (attempt < retries) {
-        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-        return fetchData(attempt + 1);
-      }
-      return null;
+  try {
+    const response = await axios.get(`${ITEM_DETAILS_API_URL}?nftId=${nftId}`, {
+      timeout: 5000,
+    });
+    if (response.status === 200) {
+      return response.data;
     }
-  };
-  return fetchData(0);
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
 export {

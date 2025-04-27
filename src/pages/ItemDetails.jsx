@@ -3,6 +3,7 @@ import EthImage from "../images/ethereum.svg";
 import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
 import nftImage from "../images/nftImage.jpg";
+import ItemDetailsSkeleton from "../components/item/ItemDetailsSkeleton";
 import { getItemDetails } from "../api/api";
 
 const ItemDetails = () => {
@@ -12,13 +13,11 @@ const ItemDetails = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log(nftId);
     const fetchItemDetails = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        setLoading(true);
-        setError(null);
         const data = await getItemDetails(nftId);
-        console.log("Fetched item details data:", data);
         if (data) {
           setItemData(data);
         } else {
@@ -34,17 +33,12 @@ const ItemDetails = () => {
       fetchItemDetails();
     }
   }, [nftId]);
+  
+
   if (loading) {
-    return (
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-6 text-center">
-            <h3>Loading...</h3>
-          </div>
-        </div>
-      </div>
-    );
+    return <ItemDetailsSkeleton />;
   }
+
   if (error) {
     return (
       <div className="container">
@@ -56,6 +50,7 @@ const ItemDetails = () => {
       </div>
     );
   }
+
   if (!itemData) {
     return (
       <div className="container">
@@ -67,8 +62,9 @@ const ItemDetails = () => {
       </div>
     );
   }
+
   return (
-    <div id="wrapper">
+    <div id="wrapper" className="item-details-page">
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
         <section aria-label="section" className="mt90 sm-mt-0">
@@ -76,7 +72,7 @@ const ItemDetails = () => {
             <div className="row">
               <div className="col-md-6 text-center">
                 <img
-                  src={itemData.image || nftImage}
+                  src={itemData.nftImage || nftImage}
                   className="img-fluid img-rounded mb-sm-30 nft-image"
                   alt={itemData.title}
                 />
@@ -100,13 +96,19 @@ const ItemDetails = () => {
                       <h6>Owner</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to={`/author/${itemData.owner?.id}`}>
-                            <img className="lazy" src={itemData.owner?.image || AuthorImage} alt="" />
+                          <Link to={`/author/${itemData.ownerId}`}>
+                            <img
+                              className="lazy"
+                              src={itemData.ownerImage || AuthorImage}
+                              alt=""
+                            />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${itemData.owner?.id}`}>{itemData.owner?.name}</Link>
+                          <Link to={`/author/${itemData.authorId}`}>
+                            {itemData.owner?.name}
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -116,13 +118,19 @@ const ItemDetails = () => {
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to={`/author/${itemData.creator?.id}`}>
-                            <img className="lazy" src={itemData.creator?.image || AuthorImage} alt="" />
-                            <i className="fa fa-check"></i>
+                          <Link to={`/author/${itemData.creatorId}`}>
+                            <img
+                              className="lazy"
+                              src={itemData.creatorImage || AuthorImage}
+                              alt=""
+                            />
                           </Link>
+                            <i className="fa fa-check"></i>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${itemData.creator?.id}`}>{itemData.creator?.name}</Link>
+                          <Link to={`/author/${itemData.creator?.authorId}`}>
+                            {itemData.creator?.name}
+                          </Link>
                         </div>
                       </div>
                     </div>
