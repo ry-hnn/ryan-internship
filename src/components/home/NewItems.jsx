@@ -28,7 +28,6 @@ const NewItems = () => {
       }, {});
       setCountdowns(newCountdowns);
     }, 1000);
-
     return () => clearInterval(interval);
   }, [collections]);
 
@@ -100,24 +99,24 @@ const NewItems = () => {
                   <div className="nft__item">
                     <div className="author_list_pp">
                       <Link
-                        to={`/author/${collection.authorId}`} // Updated to include authorId
+                        to={`/author/${collection.authorId}`}
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
                         title={`Creator: ${collection.authorName}`}
                       >
+                        <i className="fa fa-check"></i>
                         <img
                           className="lazy"
                           src={collection.authorImage}
                           alt={collection.authorName}
                         />
-                        <i className="fa fa-check"></i>
                       </Link>
                     </div>
 
                     {hasTimeLeft && (
                       <div className="de_countdown">
-                        {countdown.days} {countdown.hours}h {countdown.minutes}
-                        m {countdown.seconds}s
+                        {countdown.days} {countdown.hours}h {countdown.minutes}m{" "}
+                        {countdown.seconds}s
                       </div>
                     )}
 
@@ -140,7 +139,7 @@ const NewItems = () => {
                         </div>
                       </div>
 
-                      <Link to="/item-details">
+                      <Link to={`/item-details/${collection.nftId}`}>
                         <img
                           src={collection.nftImage}
                           className="lazy nft__item_preview"
@@ -149,7 +148,7 @@ const NewItems = () => {
                       </Link>
                     </div>
                     <div className="nft__item_info">
-                      <Link to="/item-details">
+                      <Link to={`/item-details/${collection.nftId}`}>
                         <h4>{collection.title}</h4>
                       </Link>
                       <div className="nft__item_price">

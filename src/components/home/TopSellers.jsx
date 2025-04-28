@@ -62,12 +62,12 @@ const TopSellers = () => {
                 <li key={seller.id}>
                   <div className="author_list_pp">
                     <Link to={`/author/${seller.authorId}`}>
+                    <i className="fa fa-check"></i>
                       <img
                         className="lazy pp-author"
                         src={seller.authorImage}
                         alt={seller.authorName}
                       />
-                      <i className="fa fa-check"></i>
                     </Link>
                   </div>
                   <div className="author_list_info">
