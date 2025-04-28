@@ -78,7 +78,7 @@ const NewItems = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>New Items</h2>
+              <h2 data-aos="fade-in">New Items</h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
@@ -92,7 +92,7 @@ const NewItems = () => {
                   countdown.seconds > 0);
 
               return (
-                <div
+                <div data-aos="fade-in"
                   className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
                   key={index}
                 >

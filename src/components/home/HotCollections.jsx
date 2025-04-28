@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getHotCollections } from "../../api/api";
 import ResponsiveSlider from "./ResponsiveSlider";
 import SkeletonLoader from "./SkeletonLoader";
+
 export const HotCollections = () => {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +52,9 @@ export const HotCollections = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
+              <div data-aos="fade-in">
               <h2>Hot Collections</h2>
+              </div>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
@@ -59,7 +62,7 @@ export const HotCollections = () => {
           <ResponsiveSlider>
             {collections.map((collection, index) => {
               return (
-                <div key={index} className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div data-aos="fade-in" key={index} className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                 <div className="nft_coll">
                   <div className="nft_wrap">
                     <Link to={`/item-details/${collection.nftId}`}>
