@@ -6,13 +6,12 @@ import SkeletonLoader from "../home/SkeletonLoader";
 const ExploreItems = () => {
   const [filter, setFilter] = useState("");
   const [filteredCollections, setFilteredCollections] = useState([]);
-   const [collections, setCollections] = useState([]);
-   const [visibleItems, setVisibleItems] = useState(8);
-   const [loading, setLoading] = useState(true);
-   const [countdowns, setCountdowns] = useState({});
-   
+  const [collections, setCollections] = useState([]);
+  const [visibleItems, setVisibleItems] = useState(8);
+  const [loading, setLoading] = useState(true);
+  const [countdowns, setCountdowns] = useState({});
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchCollections = async () => {
       const data = await getExploreItems();
       setCollections(data);
@@ -23,70 +22,72 @@ const ExploreItems = () => {
   }, []);
 
   const loadMore = () => {
-    setVisibleItems(prev => prev + 8);
+    setVisibleItems(prev => prev + 4);
   };
 
   const handleFilterChange = async (event) => {
     const selectedFilter = event.target.value;
     setFilter(selectedFilter);
+    setLoading(true); 
     if (selectedFilter) {
       const filteredData = await getFilterItems(selectedFilter);
       setFilteredCollections(filteredData);
     } else {
       setFilteredCollections([]);
     }
+    setLoading(false); 
   };
 
-   useEffect(() => {
-      const interval = setInterval(() => {
-        const newCountdowns = collections.reduce((acc, collection) => {
-          const timeLeft = calculateTimeLeft(collection.expiryDate);
-          acc[collection.id] = timeLeft;
-          return acc;
-        }, {});
-        setCountdowns(newCountdowns);
-      }, 1000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newCountdowns = collections.reduce((acc, collection) => {
+        const timeLeft = calculateTimeLeft(collection.expiryDate);
+        acc[collection.id] = timeLeft;
+        return acc;
+      }, {});
+      setCountdowns(newCountdowns);
+    }, 1000);
 
-      return () => clearInterval(interval);
-    }, [collections]);
-  
-    const calculateTimeLeft = (expiryDate) => {
-      const difference = +new Date(expiryDate) - +new Date();
-      let timeLeft = {};
-  
-      if (difference > 0) {
-        timeLeft = {
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        };
-      }
-  
-      return timeLeft;
-    };
+    return () => clearInterval(interval);
+  }, [collections]);
 
-    if (loading) {
-      return (
-        <section id="section-collections" className="no-bottom">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="text-center">
-                  <div className="small-border bg-color-2"></div>
-                </div>
-              </div>
-                {[...Array(8)].map((_, index) => (
-                  <div key={index} className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <SkeletonLoader />
-                  </div>
-                ))}
-            </div>
-          </div>
-        </section>
-      );
+  const calculateTimeLeft = (expiryDate) => {
+    const difference = +new Date(expiryDate) - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
     }
-   
+
+    return timeLeft;
+  };
+
+  if (loading) {
+    return (
+      <section id="section-collections" className="no-bottom">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="text-center">
+                <div className="small-border bg-color-2"></div>
+              </div>
+            </div>
+            {[...Array(8)].map((_, index) => (
+              <div key={index} className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <SkeletonLoader />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <>
       <div>
@@ -98,14 +99,13 @@ const ExploreItems = () => {
         </select>
       </div>
       {(filter ? filteredCollections : collections).slice(0, visibleItems).map((collection, index) => (
-        
         <div
           key={index}
           className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
           style={{ display: "block", backgroundSize: "cover" }}
         >
           <div className="nft__item">
-              <div className="author_list_pp">
+            <div className="author_list_pp">
               <Link
                 to={`/author/${collection.authorId}`}
                 data-bs-toggle="tooltip"
