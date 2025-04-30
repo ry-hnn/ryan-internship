@@ -11,12 +11,16 @@ const Author = () => {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [followersCount, setFollowersCount] = useState(0);
+  const [isFollowing, setIsFollowing] = useState(false);
+
   useEffect(() => {
     const fetchAuthorData = async () => {
       const data = await getAuthorItems(authorId); 
       if (data) {
         setAuthorData(data); 
         setCollections(data.nftCollection || []); 
+        setFollowersCount(data.followers || 0);
       } else {
         console.error("No data returned for authorId:", authorId);
       }
@@ -25,6 +29,16 @@ const Author = () => {
 
     fetchAuthorData();
   }, [authorId]); 
+
+  const handleFollowClick = (e) => {
+    e.preventDefault();
+    if (isFollowing) {
+      setFollowersCount((count) => Math.max(count - 1, 0));
+    } else {
+      setFollowersCount((count) => count + 1);
+    }
+    setIsFollowing(!isFollowing);
+  };
 
   if (loading) {
     return <AuthorSkeletonLoader />
@@ -72,9 +86,9 @@ const Author = () => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">573 followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
+                      <div className="profile_follower">{followersCount} followers</div>
+                      <Link to="#" className="btn-main" onClick={handleFollowClick}>
+                        {isFollowing ? "Unfollow" : "Follow"}
                       </Link>
                     </div>
                   </div>
@@ -83,7 +97,7 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-<AuthorItems collections={collections} loading={loading} authorImage={authorData.authorImage} />
+                  <AuthorItems collections={collections} loading={loading} authorImage={authorData.authorImage} />
                 </div>
               </div>
             </div>
